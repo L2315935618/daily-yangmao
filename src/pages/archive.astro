@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { listDates, loadDay } from '../lib/data';
+
+const dates = listDates();
+const summary = dates.map((d) => ({
+  date: d,
+  count: loadDay(d)?.items.length ?? 0,
+}));
+const latest = dates[0];
+---
+
+<BaseLayout title="历史归档" description="每日羊毛历史归档：按日期回顾往期羊毛，过期不候的也留个念想。">
+  <div class="section-title">
+    <h2>📅 历史归档</h2>
+    <span class="sub">共 {dates.length} 天</span>
+  </div>
+  {
+    summary.length > 0 ? (
+      <div class="card-grid">
+        {summary.map(({ date, count }) => (
+          <article class="wool-card">
+            <h3>{date === latest ? `${date}（今天）` : date}</h3>
+            <p class="summary">当日共 {count} 条羊毛</p>
+            <div class="meta">
+              <span />
+              <a class="go" href={date === latest ? '/' : `/d/${date}`}>
+                查看 →
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <div class="empty">
+        <p>暂无历史数据</p>
+      </div>
+    )
+  }
+</BaseLayout>

@@ -1,0 +1,29 @@
+---
+import type { WoolItem } from '../lib/data';
+
+interface Props {
+  item: WoolItem;
+}
+const { item } = Astro.props;
+---
+
+<article class="wool-card">
+  <div class="tags">
+    <span class="tag">{item.category}</span>
+    {item.platform && <span class="tag platform">{item.platform}</span>}
+    {item.isHot && <span class="tag hot">🔥 热门</span>}
+    {item.coupon && <span class="tag">🎫 {item.coupon}</span>}
+  </div>
+  <h3>{item.title}</h3>
+  <p class="summary">{item.summary}</p>
+  <div class="meta">
+    {item.expireAt ? <span class="expire">⏰ 截止 {item.expireAt}</span> : <span></span>}
+    {
+      item.link && (
+        <a class="go" href={item.link} target="_blank" rel="noopener noreferrer nofollow">
+          去领取 →
+        </a>
+      )
+    }
+  </div>
+</article>

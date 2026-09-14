@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import WoolCard from '../../components/WoolCard.astro';
+import PromoSection from '../../components/PromoSection.astro';
+import { CATEGORIES, CATEGORY_SLUGS, SLUG_TO_CATEGORY, listDates, loadDay } from '../../lib/data';
+
+export function getStaticPaths() {
+  return Object.values(CATEGORY_SLUGS).map((slug) => ({ params: { slug } }));
+}
+
+const { slug } = Astro.params;
+const category = SLUG_TO_CATEGORY[slug ?? ''] ?? CATEGORIES[0];
+
+// 聚合最近 7 天该分类的条目，新的在前
+const items = listDates()
+  .slice(0, 7)
+  .flatMap((d) => loadDay(d)?.items ?? [])
+  .filter((i) => i.category === category)
+  .sort((a, b) => Number(b.isHot) - Number(a.isHot));
+
+const DESC: Record<string, string> = {
+  电商券: '全网电商神券：淘宝/京东/拼多多/抖音，大额券每日更新',
+  外卖红包: '美团/饿了么外卖红包每日领，吃饭更省钱',
+  签到福利: '各大 App 签到打卡福利汇总，动动手指领现金',
+  白嫖活动: '免费会员、免费好礼、0元购活动每日精选',
+};
+---
+
+<BaseLayout title={category} description={`每日羊毛 · ${DESC[category] ?? category}`}>
+  <div class="section-title">
+    <h2>{category}</h2>
+    <span class="sub">{DESC[category]} · 最近 7 天共 {items.length} 条</span>
+  </div>
+  {
+    items.length > 0 ? (
+      <div class="card-grid">
+        {items.map((item) => (
+          <WoolCard item={item} />
+        ))}
+      </div>
+    ) : (
+      <div class="empty">
+        <p>该分类近期暂无数据</p>
+      </div>
+    )
+  }
+  <PromoSection />
+</BaseLayout>

@@ -1,0 +1,63 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WoolCard from '../components/WoolCard.astro';
+import { listDates, loadDay, type WoolItem } from '../lib/data';
+
+// P1 兜底：纯前端静态搜索历史数据。Worker 代理就绪后，此页再接入实时搜券 API。
+const allItems: (WoolItem & { date: string })[] = listDates()
+  .slice(0, 30)
+  .flatMap((d) => (loadDay(d)?.items ?? []).map((i) => ({ ...i, date: d })));
+---
+
+<BaseLayout title="搜索" description="搜索每日羊毛历史收录的优惠、神券与福利活动。">
+  <div class="section-title">
+    <h2>🔍 搜索羊毛</h2>
+    <span class="sub" id="result-count"></span>
+  </div>
+  <div class="card-grid" id="results"></div>
+  <div class="empty" id="empty-hint" hidden>
+    <p>没有找到相关羊毛，换个关键词试试</p>
+  </div>
+  <p style="font-size:0.8rem;color:var(--color-text-2)">
+    当前搜索范围为最近 30 天历史数据；全网实时搜券功能接入中。
+  </p>
+
+  <script define:vars={{ allItems }}>
+    const params = new URLSearchParams(location.search);
+    const q = (params.get('q') || '').trim().toLowerCase();
+    const results = document.getElementById('results');
+    const count = document.getElementById('result-count');
+    const emptyHint = document.getElementById('empty-hint');
+
+    const matched = q
+      ? allItems.filter((i) =>
+          [i.title, i.summary, i.platform, i.category, i.coupon]
+            .filter(Boolean)
+            .some((f) => f.toLowerCase().includes(q)),
+        )
+      : [];
+
+    count.textContent = q ? `关键词「${q}」· 命中 ${matched.length} 条` : '请输入关键词';
+
+    if (q && matched.length === 0) emptyHint.hidden = false;
+
+    for (const item of matched) {
+      const el = document.createElement('article');
+      el.className = 'wool-card';
+      const link = item.link
+        ? `<a class="go" href="${item.link}" target="_blank" rel="noopener noreferrer nofollow">去领取 →</a>`
+        : '';
+      el.innerHTML = `
+        <div class="tags">
+          <span class="tag">${item.category}</span>
+          ${item.platform ? `<span class="tag platform">${item.platform}</span>` : ''}
+          ${item.isHot ? '<span class="tag hot">🔥 热门</span>' : ''}
+          ${item.coupon ? `<span class="tag">🎫 ${item.coupon}</span>` : ''}
+        </div>
+        <h3>${item.title}</h3>
+        <p class="summary">${item.summary}</p>
+        <div class="meta"><span>${item.date}</span>${link}</div>`;
+      results.appendChild(el);
+    }
+  </script>
+</BaseLayout>

@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WoolCard from '../components/WoolCard.astro';
+import CompareTable from '../components/CompareTable.astro';
+import PromoSection from '../components/PromoSection.astro';
+import { loadLatest, listDates } from '../lib/data';
+
+const latest = loadLatest();
+const dates = listDates().slice(0, 7);
+// 羊毛流：非比价类条目（无 finalPrice 的）按 热门优先
+const feedItems =
+  latest?.items
+    .filter((i) => i.finalPrice == null)
+    .sort((a, b) => Number(b.isHot) - Number(a.isHot)) ?? [];
+// 比价类条目
+const compareItems = latest?.items.filter((i) => i.finalPrice != null) ?? [];
+---
+
+<BaseLayout
+  title="每日羊毛"
+  description="每日羊毛：每天聚合全网外卖红包、签到福利、白嫖活动、电商神券，多平台比价，帮你省钱。"
+>
+  {
+    latest ? (
+      <>
+        <nav class="date-nav" aria-label="日期切换">
+          {dates.map((d) => (
+            <a href={d === latest.date ? '/' : `/d/${d}`} class={d === latest.date ? 'current' : ''}>
+              {d === latest.date ? '今天' : d.slice(5)}
+            </a>
+          ))}
+        </nav>
+
+        <div class="section-title">
+          <h2>🐑 今日羊毛</h2>
+          <span class="sub">{latest.date} 更新 · 共 {feedItems.length} 条</span>
+        </div>
+        <div class="card-grid">
+          {feedItems.map((item) => (
+            <WoolCard item={item} />
+          ))}
+        </div>
+
+        <div class="section-title">
+          <h2>🎫 热门神券比价</h2>
+          <span class="sub">同商品跨平台对比，标黄为全网最低</span>
+        </div>
+        <div class="compare-section">
+          <CompareTable items={compareItems} />
+        </div>
+
+        <PromoSection />
+      </>
+    ) : (
+      <div class="empty">
+        <h2>今日羊毛抓取中…</h2>
+        <p>每天 8 点准时更新，先来看看历史羊毛吧</p>
+        <p>
+          <a href="/archive">→ 历史归档</a>
+        </p>
+      </div>
+    )
+  }
+</BaseLayout>

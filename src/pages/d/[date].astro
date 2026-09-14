@@ -1,0 +1,57 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import WoolCard from '../../components/WoolCard.astro';
+import CompareTable from '../../components/CompareTable.astro';
+import { listDates, loadDay } from '../../lib/data';
+
+export function getStaticPaths() {
+  // 最新一天由首页承载，归档页只生成历史日期
+  const dates = listDates();
+  return dates.slice(1).map((d) => ({ params: { date: d } }));
+}
+
+const { date } = Astro.params;
+const day = date ? loadDay(date) : null;
+const feedItems =
+  day?.items.filter((i) => i.finalPrice == null).sort((a, b) => Number(b.isHot) - Number(a.isHot)) ??
+  [];
+const compareItems = day?.items.filter((i) => i.finalPrice != null) ?? [];
+---
+
+<BaseLayout title={`${date} 羊毛`} description={`每日羊毛 ${date} 期：当日外卖红包、签到福利、白嫖活动、电商神券汇总。`}>
+  {
+    day ? (
+      <>
+        <div class="section-title">
+          <h2>🐑 {date} 的羊毛</h2>
+          <span class="sub">共 {day.items.length} 条 · 部分可能已过期</span>
+        </div>
+        <div class="card-grid">
+          {feedItems.map((item) => (
+            <WoolCard item={item} />
+          ))}
+        </div>
+        {compareItems.length > 0 && (
+          <>
+            <div class="section-title">
+              <h2>🎫 当日神券比价</h2>
+            </div>
+            <div class="compare-section">
+              <CompareTable items={compareItems} />
+            </div>
+          </>
+        )}
+        <p>
+          <a href="/archive">← 返回归档</a> · <a href="/">回首页看今天 →</a>
+        </p>
+      </>
+    ) : (
+      <div class="empty">
+        <h2>这一天没有数据</h2>
+        <p>
+          <a href="/archive">→ 看看其他日期</a>
+        </p>
+      </div>
+    )
+  }
+</BaseLayout>

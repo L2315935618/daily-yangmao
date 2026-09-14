@@ -1,0 +1,66 @@
+---
+import { groupCompareItems, lowestPrice, type WoolItem } from '../lib/data';
+
+interface Props {
+  items: WoolItem[];
+}
+const { items } = Astro.props;
+
+// 同商品跨平台分组，有券优先、价低优先
+const groups = [...groupCompareItems(items).values()]
+  .map((g) =>
+    g.slice().sort((a, b) => {
+      if (!!b.coupon !== !!a.coupon) return Number(!!b.coupon) - Number(!!a.coupon);
+      return (a.finalPrice ?? Infinity) - (b.finalPrice ?? Infinity);
+    }),
+  )
+  .sort((a, b) => lowestPrice(a) - lowestPrice(b));
+---
+
+{
+  groups.length > 0 && (
+    <div class="compare-table-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>平台</th>
+            <th>商品</th>
+            <th>原价</th>
+            <th>到手价</th>
+            <th>优惠券</th>
+            <th>入口</th>
+          </tr>
+        </thead>
+        <tbody>
+          {groups.map((group) => {
+            const low = lowestPrice(group);
+            return group.map((item) => (
+              <tr class={item.finalPrice === low ? 'lowest' : ''}>
+                <td>
+                  {item.coupon ? '🔥 ' : ''}
+                  {item.platform}
+                </td>
+                <td>{item.title.replace(' 多平台比价', '')}</td>
+                <td class="orig">{item.originalPrice != null ? `¥${item.originalPrice}` : '-'}</td>
+                <td class="price">
+                  ¥{item.finalPrice}
+                  {item.finalPrice === low && group.length > 1 && (
+                    <span class="badge-lowest">全网最低</span>
+                  )}
+                </td>
+                <td>{item.coupon || '-'}</td>
+                <td>
+                  {item.link && (
+                    <a href={item.link} target="_blank" rel="noopener noreferrer nofollow">
+                      去购买
+                    </a>
+                  )}
+                </td>
+              </tr>
+            ));
+          })}
+        </tbody>
+      </table>
+    </div>
+  )
+}

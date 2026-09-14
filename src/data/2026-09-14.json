@@ -1,0 +1,122 @@
+{
+  "date": "2026-09-14",
+  "items": [
+    {
+      "id": "waimai-001",
+      "title": "美团外卖 天天神券 25-8",
+      "category": "外卖红包",
+      "platform": "美团",
+      "summary": "每日可领，满25减8，全国通用，限外卖频道使用。",
+      "link": "https://example.com/meituan-25-8",
+      "coupon": "8元券",
+      "originalPrice": null,
+      "finalPrice": null,
+      "expireAt": "2026-09-14 23:59",
+      "isHot": true
+    },
+    {
+      "id": "waimai-002",
+      "title": "饿了么 爆红包 30-10",
+      "category": "外卖红包",
+      "platform": "饿了么",
+      "summary": "整点抢，满30减10，部分城市可用。",
+      "link": "https://example.com/eleme-30-10",
+      "coupon": "10元券",
+      "originalPrice": null,
+      "finalPrice": null,
+      "expireAt": "2026-09-14 23:59",
+      "isHot": false
+    },
+    {
+      "id": "ds-001",
+      "title": "抽纸整箱 24包 多平台比价",
+      "category": "电商券",
+      "platform": "拼多多",
+      "summary": "拼多多百亿补贴最低，叠加5元券到手24.9。",
+      "link": "https://example.com/pdd-tissue",
+      "coupon": "5元券",
+      "originalPrice": 39.9,
+      "finalPrice": 24.9,
+      "expireAt": "",
+      "isHot": true
+    },
+    {
+      "id": "ds-002",
+      "title": "抽纸整箱 24包",
+      "category": "电商券",
+      "platform": "淘宝",
+      "summary": "淘宝同款，店铺券后29.9。",
+      "link": "https://example.com/taobao-tissue",
+      "coupon": "10元券",
+      "originalPrice": 39.9,
+      "finalPrice": 29.9,
+      "expireAt": "",
+      "isHot": false
+    },
+    {
+      "id": "ds-003",
+      "title": "蓝月亮洗衣液 3kg 瓶装",
+      "category": "电商券",
+      "platform": "京东",
+      "summary": "京东自营，PLUS券后33.9，次日达。",
+      "link": "https://example.com/jd-laundry",
+      "coupon": "6元券",
+      "originalPrice": 39.9,
+      "finalPrice": 33.9,
+      "expireAt": "",
+      "isHot": false
+    },
+    {
+      "id": "qd-001",
+      "title": "支付宝 签到领现金 连签7天翻倍",
+      "category": "签到福利",
+      "platform": "支付宝",
+      "summary": "首页搜「签到」，每日0.1-1元，连签7天额外奖励。",
+      "link": "https://example.com/alipay-checkin",
+      "coupon": "",
+      "originalPrice": null,
+      "finalPrice": null,
+      "expireAt": "",
+      "isHot": false
+    },
+    {
+      "id": "qd-002",
+      "title": "淘宝 芭芭农场 浇水领水果",
+      "category": "签到福利",
+      "platform": "淘宝",
+      "summary": "每日浇水，约15天可兑一箱水果包邮。",
+      "link": "https://example.com/babafarm",
+      "coupon": "",
+      "originalPrice": null,
+      "finalPrice": null,
+      "expireAt": "",
+      "isHot": false
+    },
+    {
+      "id": "bp-001",
+      "title": "腾讯视频 会员日 免费领3天VIP",
+      "category": "白嫖活动",
+      "platform": "腾讯视频",
+      "summary": "每月18日会员日，参与活动免费领3天VIP。",
+      "link": "https://example.com/qqvideo-vip",
+      "coupon": "",
+      "originalPrice": null,
+      "finalPrice": null,
+      "expireAt": "2026-09-14 23:59",
+      "isHot": true
+    },
+    {
+      "id": "bp-002",
+      "title": "网易云音乐 听歌打卡 兑黑胶周卡",
+      "category": "白嫖活动",
+      "platform": "网易云音乐",
+      "summary": "连续打卡7天可兑黑胶VIP周卡。",
+      "link": "https://example.com/netease-vip",
+      "coupon": "",
+      "originalPrice": null,
+      "finalPrice": null,
+      "expireAt": "",
+      "isHot": false
+    }
+  ]
+}

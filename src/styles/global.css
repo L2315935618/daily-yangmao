@@ -1,0 +1,272 @@
+:root {
+  --color-bg: #f6f7f9;
+  --color-surface: #ffffff;
+  --color-text: #1f2329;
+  --color-text-2: #646a73;
+  --color-primary: #e6432d; /* 羊毛红 */
+  --color-primary-soft: #fdeceb;
+  --color-accent: #f7b32b;
+  --color-border: #e5e7eb;
+  --radius: 10px;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --max-w: 1080px;
+}
+
+* { box-sizing: border-box; }
+
+html { font-size: 16px; }
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+  line-height: 1.6;
+}
+
+a { color: var(--color-primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+a:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+
+.container {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* ---------- Header ---------- */
+.site-header {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.site-header .inner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 12px 16px;
+}
+.brand {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  white-space: nowrap;
+}
+.brand:hover { text-decoration: none; }
+.brand small {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--color-text-2);
+  font-weight: 400;
+}
+.main-nav {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.main-nav a {
+  padding: 6px 12px;
+  border-radius: 999px;
+  color: var(--color-text);
+  font-size: 0.9rem;
+}
+.main-nav a:hover { background: var(--color-primary-soft); text-decoration: none; }
+.main-nav a.active {
+  background: var(--color-primary);
+  color: #fff;
+}
+.search-form {
+  margin-left: auto;
+  display: flex;
+  gap: 6px;
+}
+.search-form input {
+  padding: 7px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  font-size: 0.9rem;
+  width: 160px;
+}
+.search-form button {
+  padding: 7px 14px;
+  border: none;
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+/* ---------- 卡片流 ---------- */
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin: 16px 0 32px;
+}
+@media (min-width: 768px) {
+  .card-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1024px) {
+  .card-grid { grid-template-columns: repeat(3, 1fr); }
+}
+.wool-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.wool-card .tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.tag {
+  font-size: 0.72rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+.tag.platform { background: #eef2ff; color: #4f46e5; }
+.tag.hot { background: var(--color-accent); color: #5b3a00; font-weight: 600; }
+.wool-card h3 {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+.wool-card .summary {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--color-text-2);
+  flex: 1;
+}
+.wool-card .meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  color: var(--color-text-2);
+}
+.wool-card .go {
+  display: inline-block;
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 0.82rem;
+}
+.wool-card .go:hover { text-decoration: none; opacity: 0.9; }
+.expire { color: var(--color-primary); }
+
+/* ---------- 比价表 ---------- */
+.compare-section { margin: 8px 0 32px; }
+.compare-table-wrap { overflow-x: auto; }
+table.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-surface);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  font-size: 0.88rem;
+}
+.compare-table th, .compare-table td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+.compare-table th {
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+.compare-table tr.lowest td { background: #fff8e6; }
+.compare-table .price { font-weight: 700; color: var(--color-primary); }
+.compare-table .orig { color: var(--color-text-2); text-decoration: line-through; font-size: 0.8rem; }
+.badge-lowest {
+  font-size: 0.7rem;
+  background: var(--color-accent);
+  color: #5b3a00;
+  border-radius: 4px;
+  padding: 1px 6px;
+  margin-left: 4px;
+}
+
+/* ---------- 区块标题 ---------- */
+.section-title {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 28px 0 12px;
+}
+.section-title h2 { margin: 0; font-size: 1.25rem; }
+.section-title .sub { font-size: 0.82rem; color: var(--color-text-2); }
+
+/* ---------- 引流区 ---------- */
+.promo {
+  background: linear-gradient(135deg, #fff5f4, #fffbf0);
+  border: 1px dashed var(--color-primary);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin: 24px 0;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.promo .qr {
+  width: 96px;
+  height: 96px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-2);
+  font-size: 0.75rem;
+  flex-shrink: 0;
+}
+.promo h3 { margin: 0 0 6px; font-size: 1.05rem; }
+.promo p { margin: 0; font-size: 0.85rem; color: var(--color-text-2); }
+
+/* ---------- Footer ---------- */
+.site-footer {
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface);
+  padding: 20px 0;
+  margin-top: 40px;
+  font-size: 0.8rem;
+  color: var(--color-text-2);
+  text-align: center;
+}
+
+/* ---------- 空态 ---------- */
+.empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--color-text-2);
+}
+
+/* ---------- 日期导航 ---------- */
+.date-nav {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 12px 0;
+}
+.date-nav a {
+  padding: 4px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  font-size: 0.82rem;
+  color: var(--color-text);
+  background: var(--color-surface);
+}
+.date-nav a:hover { border-color: var(--color-primary); color: var(--color-primary); text-decoration: none; }
+.date-nav a.current { background: var(--color-primary); color: #fff; border-color: var(--color-primary); }

@@ -1,0 +1,40 @@
+---
+import { CATEGORIES, CATEGORY_SLUGS } from '../lib/data';
+
+interface Props {
+  currentPath: string;
+}
+const { currentPath } = Astro.props;
+const today = new Date().toLocaleDateString('zh-CN', {
+  month: 'long',
+  day: 'numeric',
+  weekday: 'long',
+});
+
+function isActive(slug: string): boolean {
+  return currentPath.startsWith(`/c/${slug}`);
+}
+---
+
+<header class="site-header">
+  <div class="container inner">
+    <a class="brand" href="/">
+      🐑 每日羊毛
+      <small>{today} · 每日更新</small>
+    </a>
+    <nav class="main-nav" aria-label="分类导航">
+      {
+        CATEGORIES.map((c) => (
+          <a href={`/c/${CATEGORY_SLUGS[c]}`} class={isActive(CATEGORY_SLUGS[c]) ? 'active' : ''}>
+            {c}
+          </a>
+        ))
+      }
+      <a href="/archive" class={currentPath.startsWith('/archive') ? 'active' : ''}>历史归档</a>
+    </nav>
+    <form class="search-form" action="/search" method="get" role="search">
+      <input type="search" name="q" placeholder="搜羊毛 / 搜券…" aria-label="搜索" />
+      <button type="submit">搜索</button>
+    </form>
+  </div>
+</header>

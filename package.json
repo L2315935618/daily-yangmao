@@ -1,0 +1,17 @@
+{
+  "name": "daily-yangmao",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "每日羊毛 - 全网薅羊毛聚合站",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.2.1",
+    "astro": "^5.0.0"
+  }
+}
