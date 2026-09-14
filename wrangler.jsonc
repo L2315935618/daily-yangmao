@@ -1,0 +1,9 @@
+{
+  // Cloudflare Workers 静态资产配置
+  // Build: npm run build → Deploy: npx wrangler deploy
+  "name": "daily-yangmao",
+  "compatibility_date": "2026-09-14",
+  "assets": {
+    "directory": "./dist"
+  }
+}
