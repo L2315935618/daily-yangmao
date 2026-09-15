@@ -4,6 +4,6 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://daily-yangmao.2315935618.workers.dev',
+  site: 'https://meiriyangmao.top',
   integrations: [sitemap()],
 });
